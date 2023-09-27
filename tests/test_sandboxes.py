@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import time
 import uuid
 from typing import TYPE_CHECKING
@@ -57,6 +58,10 @@ def test_create_unknown_image_raises_docker_error_no_such_image(
     assert "unknown_image" in error
 
 
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Test doesn't work in Github Actions.",
+)
 def test_start_no_stdin_data(profile: Profile) -> None:
     command = 'echo "stdout data" && echo "stderr data" >&2'
     sandbox = create(profile.name, command)
@@ -263,6 +268,10 @@ def test_run_memory_limit(profile: Profile) -> None:
     assert result["exit_code"] not in [None, 0]
 
 
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Test doesn't work in Github Actions.",
+)
 def test_run_file_size_limit(profile: Profile) -> None:
     limits = {"file_size": 10}
 
@@ -283,6 +292,10 @@ def test_run_read_only_file_system(profile_read_only: Profile) -> None:
     assert b"Read-only file system" in result["stderr"]
 
 
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Test doesn't work in Github Actions.",
+)
 def test_fork_exceed_processes_limit(profile: Profile) -> None:
     result = run(
         profile.name,
@@ -323,6 +336,10 @@ def test_run_network_disabled(profile: Profile) -> None:
     assert b"unable to resolve host address" in result["stderr"]
 
 
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Test doesn't work in Github Actions.",
+)
 def test_run_network_enabled(profile: Profile) -> None:
     profile.network_disabled = False
 
