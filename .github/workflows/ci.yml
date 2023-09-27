@@ -22,5 +22,5 @@ jobs:
            registry: hyperskill.azurecr.io
            username: ${{ secrets.REGISTRY_USER }}
            password: ${{ secrets.REGISTRY_PASSWORD }}
-       - run: docker pull hyperskill.azurecr.io/epicbox/python:3.10.6-2d0d17450
+       - run: docker pull hyperskill.azurecr.io/epicbox/python:3.10.6-011c5b05a
        - run: poetry run pytest .
