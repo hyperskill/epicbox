@@ -1,8 +1,9 @@
 name: Format code
 on:
-  - pull_request
-  - push:
-      branch: master
+  push:
+    branches:
+      - 'master'
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
