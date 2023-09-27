@@ -58,6 +58,10 @@ def test_create_unknown_image_raises_docker_error_no_such_image(
     assert "unknown_image" in error
 
 
+@pytest.mark.skipif(
+    os.getenv("GITHUB_ACTIONS") == "true",
+    reason="Test doesn't work in Github Actions.",
+)
 def test_start_no_stdin_data(profile: Profile) -> None:
     command = 'echo "stdout data" && echo "stderr data" >&2'
     sandbox = create(profile.name, command)
