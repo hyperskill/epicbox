@@ -9,8 +9,6 @@ runs:
       shell: bash
     - run: sudo apt-get update
       shell: bash
-    - run: sudo apt search libgdal
-      shell: bash
     - name: Setup libraries
       run: |
         sudo apt-get install -y \
