@@ -14,12 +14,7 @@ runs:
     - name: Setup libraries
       run: |
         sudo apt-get install -y \
-          pkg-config \
-          libcairo2-dev \
-          libmariadb-dev \
-          pipx \
-          gcc \
-          && sudo apt-get install -y libgdal30 || sudo apt-get install -y libgdal26
+          pipx
       shell: bash
     - name: Install Poetry
       run: pipx install poetry
