@@ -15,11 +15,11 @@ runs:
           pipx
       shell: bash
     - name: Install Poetry
-      run: pipx install poetry
+      run: pipx install poetry==$(head -n 1 .poetry-version)
       shell: bash
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
-        python-version: "3.11"
+        python-version-file: '.python-version'
         cache: 'poetry'
     - name: Install dependencies
       run: poetry install --only main,dev --no-interaction --no-ansi
