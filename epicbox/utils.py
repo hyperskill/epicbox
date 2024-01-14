@@ -292,7 +292,7 @@ def truncate_result(result: dict[str, Any]) -> dict[str, Any]:
     MAX_OUTPUT_LENGTH = 100
     truncated = {}
     for k, v in result.items():
-        if k in ["stdout", "stderr"] and len(v) > MAX_OUTPUT_LENGTH:
+        if k in {"stdout", "stderr"} and len(v) > MAX_OUTPUT_LENGTH:
             truncated[k] = v[:MAX_OUTPUT_LENGTH] + b" *** truncated ***"
         else:
             truncated[k] = v
@@ -300,4 +300,4 @@ def truncate_result(result: dict[str, Any]) -> dict[str, Any]:
 
 
 def is_killed_by_sigkill_or_sigxcpu(status: int) -> bool:
-    return status - 128 in [signal.SIGKILL, signal.SIGXCPU]
+    return status - 128 in {signal.SIGKILL, signal.SIGXCPU}

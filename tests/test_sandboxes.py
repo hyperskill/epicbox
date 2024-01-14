@@ -265,7 +265,7 @@ def test_run_memory_limit(profile: Profile) -> None:
 
     assert result["oom_killed"] is True
     assert result["timeout"] is False
-    assert result["exit_code"] not in [None, 0]
+    assert result["exit_code"] not in {None, 0}
 
 
 @pytest.mark.skipif(
@@ -288,7 +288,7 @@ def test_run_file_size_limit(profile: Profile) -> None:
 def test_run_read_only_file_system(profile_read_only: Profile) -> None:
     result = run(profile_read_only.name, "touch /tmp/file")
 
-    assert result["exit_code"] not in [None, 0]
+    assert result["exit_code"] not in {None, 0}
     assert b"Read-only file system" in result["stderr"]
 
 

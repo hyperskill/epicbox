@@ -12,26 +12,22 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "~3.11"
 docker = ">=6.1.3"
 python-dateutil = "^2.4"
 requests = "^2.31.0"
 structlog = ">=23.1.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.9.1"
 mypy = "^1.5.1"
 pytest = "^7.4.2"
-ruff = "^0.0.291"
+ruff = "^0.1.13"
 types-python-dateutil = "^2.8.19.14"
 types-requests = "^2.31.0.4"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.black]
-target-version = ['py311']
 
 [tool.ruff]
 target-version = "py311"
@@ -44,10 +40,8 @@ ignore = [
   "ANN003",
   "ANN101",
   "ARG001",
-  "FBT003",
-  "FBT001",
-  "FBT002",
   "B017",
+  "COM812",
   "CPY001",
   "D100",
   "D101",
@@ -57,6 +51,10 @@ ignore = [
   "D105",
   "D107",
   "E203",
+  "FBT001",
+  "FBT002",
+  "FBT003",
+  "ISC001",
   "N806",
   "PLR2004",
   "PLR6301",
@@ -133,3 +131,25 @@ warn_redundant_casts = true
 warn_unreachable = true
 warn_unused_configs = true
 warn_unused_ignores = true
+
+exclude = [
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
