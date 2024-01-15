@@ -107,7 +107,7 @@ with epicbox.working_directory() as workdir:
 ```
 
 ## Installation
-`epicbox` can be installed by running `pip install epicbox`. It's tested on Python 3.11+ and
+`epicbox` can be installed by running `pip install epicbox`. It's tested on Python 3.12+ and
 Docker 1.12+.
 
 You can also check the [epicbox-images](https://github.com/hyperskill/epicbox-images)
