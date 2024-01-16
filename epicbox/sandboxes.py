@@ -74,7 +74,7 @@ def create(
     command: str | None = None,
     files: list[dict[str, Any]] | None = None,
     limits: dict[str, Any] | None = None,
-    workdir: WorkingDirectory | str | None = None,
+    workdir: WorkingDirectory | None = None,
 ) -> Sandbox:
     """Create a new sandbox container without starting it.
 
@@ -95,14 +95,14 @@ def create(
     if profile_name not in config.PROFILES:
         msg = f"Profile not found: {profile_name}"
         raise ValueError(msg)
-    if workdir is not None and not isinstance(workdir, WorkingDirectory):
+
+    if not isinstance(workdir, WorkingDirectory | None):
         msg = (
             "Invalid 'workdir', "
             "it should be created using 'working_directory' context manager"
         )
-        raise ValueError(
-            msg,
-        )
+        raise TypeError(msg)
+
     sandbox_id = str(uuid.uuid4())
     profile = config.PROFILES[profile_name]
     cmd: str = command or profile.command or "true"
@@ -280,7 +280,7 @@ def run(
     files: list[dict[str, Any]] | None = None,
     stdin: bytes | str | None = None,
     limits: dict[str, Any] | None = None,
-    workdir: WorkingDirectory | str | None = None,
+    workdir: WorkingDirectory | None = None,
 ) -> dict[str, Any]:
     """Run a command in a new sandbox container and wait for it to finish running.
 
@@ -343,14 +343,13 @@ def _write_files(container: Container, files: list[dict[str, Any]]) -> None:
     tarball_fileobj = io.BytesIO()
     with tarfile.open(fileobj=tarball_fileobj, mode="w") as tarball:
         for file in files:
-            if not file.get("name") or not isinstance(file["name"], str):
-                continue
-            content = file.get("content", b"")
-            file_info = tarfile.TarInfo(name=file["name"])
-            file_info.size = len(content)
-            file_info.mtime = mtime
-            tarball.addfile(file_info, fileobj=io.BytesIO(content))
-            files_written.append(file["name"])
+            if (file_name := file.get("name")) and isinstance(file_name, str):
+                content = file.get("content", b"")
+                file_info = tarfile.TarInfo(name=file_name)
+                file_info.size = len(content)
+                file_info.mtime = mtime
+                tarball.addfile(file_info, fileobj=io.BytesIO(content))
+                files_written.append(file_name)
     try:
         docker_client.api.put_archive(
             container.id,
