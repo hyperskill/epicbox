@@ -214,7 +214,7 @@ def test_run_unknown_profile(profile: Profile) -> None:
 
 
 def test_run_invalid_workdir(profile: Profile) -> None:
-    with pytest.raises(ValueError) as excinfo:
+    with pytest.raises(TypeError) as excinfo:
         run(profile.name, "true", workdir="dir")  # type: ignore[arg-type]
 
     assert "working_directory" in str(excinfo.value)
