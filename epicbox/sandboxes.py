@@ -19,7 +19,7 @@ if TYPE_CHECKING:
     from docker.models.containers import Container
     from docker.models.images import Image
 
-__all__ = ["create", "start", "destroy", "run", "working_directory"]
+__all__ = ["create", "destroy", "run", "start", "working_directory"]
 
 logger = structlog.get_logger()
 

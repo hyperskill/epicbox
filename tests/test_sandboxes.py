@@ -13,7 +13,7 @@ from docker import DockerClient
 from epicbox import config, Profile, utils
 from epicbox.exceptions import DockerError
 from epicbox.sandboxes import (
-    _write_files,
+    _write_files,  # noqa: PLC2701
     create,
     destroy,
     run,

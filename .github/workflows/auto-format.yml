@@ -18,18 +18,24 @@ jobs:
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
+
       - name: Install Poetry
         run: pipx install poetry==$(head -n 1 .poetry-version)
+
       - uses: actions/setup-python@v5
         with:
           python-version-file: '.python-version'
           cache: 'poetry'
+
       - name: Install dependencies
         run: poetry install --no-interaction --no-ansi --no-root
+
       - name: Check files using the ruff formatter
         run: poetry run ruff format
+
       - name: Check files using the ruff linter
         run: poetry run ruff --fix --unsafe-fixes --preview --exit-zero .
+
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
