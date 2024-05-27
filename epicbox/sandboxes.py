@@ -5,6 +5,7 @@ import tarfile
 import time
 import uuid
 from contextlib import contextmanager
+from dataclasses import dataclass
 from typing import Any, Self, TYPE_CHECKING
 
 import structlog
@@ -26,15 +27,15 @@ logger = structlog.get_logger()
 _SANDBOX_NAME_PREFIX = "epicbox-"
 
 
+@dataclass
 class WorkingDirectory:
     """Represent a Docker volume used as a working directory.
 
     Not intended to be instantiated by yourself.
     """
 
-    def __init__(self, volume: str, node: str | None = None) -> None:
-        self.volume = volume
-        self.node = node
+    volume: str
+    node: str | None = None
 
     def __repr__(self) -> str:
         if self.node:

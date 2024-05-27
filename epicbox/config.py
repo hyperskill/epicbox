@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Any
 
 import structlog._config
@@ -31,22 +32,14 @@ DEFAULT_USER = "root"
 CPU_TO_REAL_TIME_FACTOR = 5
 
 
+@dataclass
 class Profile:
-    def __init__(
-        self,
-        name: str,
-        docker_image: str,
-        command: str | None = None,
-        user: str = DEFAULT_USER,
-        read_only: bool = False,
-        network_disabled: bool = True,
-    ) -> None:
-        self.name = name
-        self.docker_image = docker_image
-        self.command = command
-        self.user = user
-        self.read_only = read_only
-        self.network_disabled = network_disabled
+    name: str
+    docker_image: str
+    command: str | None = None
+    user: str = DEFAULT_USER
+    read_only: bool = False
+    network_disabled: bool = True
 
 
 def configure(
