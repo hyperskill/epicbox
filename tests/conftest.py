@@ -136,7 +136,7 @@ class ConfigWrapper:
             setattr(epicbox_config, attr, value)
 
 
-@pytest.fixture()
+@pytest.fixture
 def config() -> Iterator[ConfigWrapper]:
     """Return wrapped config.
 
