@@ -40,7 +40,7 @@ def docker_client(docker_url: str) -> DockerClient:
 
 @pytest.fixture(scope="session")
 def docker_image() -> str:
-    return "hyperskill.azurecr.io/epicbox/python:3.10.6-011c5b05a"
+    return "hyperskill.azurecr.io/epicbox/python:3.11.5-c0347e7d1"
 
 
 @pytest.fixture(scope="session")
