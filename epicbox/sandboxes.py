@@ -98,7 +98,7 @@ def create(
         raise ValueError(msg)
 
     if not isinstance(workdir, WorkingDirectory | None):
-        msg = (
+        msg = (  # type: ignore[unreachable]
             "Invalid 'workdir', "
             "it should be created using 'working_directory' context manager"
         )
