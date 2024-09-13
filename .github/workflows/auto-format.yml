@@ -34,7 +34,7 @@ jobs:
         run: poetry run ruff format
 
       - name: Check files using the ruff linter
-        run: poetry run ruff --fix --unsafe-fixes --preview --exit-zero .
+        run: poetry run ruff check --fix --unsafe-fixes --preview --exit-zero .
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
