@@ -162,6 +162,19 @@ def _create_sandbox_container(
         # ran the first container with this working directory.
         environment = ["constraint:node==" + workdir.node]
 
+    # Configure logging based on image
+    if str(image) == "hyperskill.azurecr.io/epicbox/hyperskill-node-javascript:18.20.4-bullseye-slim-852c0e02b":
+        log_config = {
+            "type": "json-file",
+            "config": {
+                "max-size": "10m",
+                "max-file": "3"
+            }
+        }
+    else:
+        # Disable the logging driver for other images
+        log_config = {"type": "none"}
+
     docker_client = utils.get_docker_client()
     log = logger.bind(sandbox_id=sandbox_id)
     log.info(
@@ -193,8 +206,8 @@ def _create_sandbox_container(
             ulimits=ulimits,
             # limit pid
             pids_limit=limits["processes"],
-            # Disable the logging driver
-            log_config={"type": "none"},
+            # Configure logging driver
+            log_config=log_config,
         )
     except (RequestException, DockerException) as e:
         if isinstance(e, APIError) and e.response.status_code == 409:
