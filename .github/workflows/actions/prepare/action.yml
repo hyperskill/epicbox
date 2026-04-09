@@ -18,7 +18,7 @@ runs:
         cache: 'poetry'
 
     - name: Install dependencies
-      run: poetry sync --only main,dev --no-interaction --no-ansi --no-root
+      run: poetry install --only main,dev --no-interaction --no-ansi --no-root
       shell: bash
 
     - name: Report versions
