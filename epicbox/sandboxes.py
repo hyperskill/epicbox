@@ -313,7 +313,7 @@ def working_directory() -> Iterator[WorkingDirectory]:
     log.info("Creating new docker volume for working directory")
     try:
         volume = docker_client.volumes.create(volume_name)
-    except (RequestException, DockerException) as e:
+    except Exception as e:
         log.exception("Failed to create a docker volume")
         raise exceptions.DockerError(str(e)) from e
     log.info("New docker volume is created")
