@@ -4,11 +4,17 @@ on:
   pull_request_target:
     types: [ opened, reopened ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}
+  cancel-in-progress: false
+
 permissions:
   pull-requests: write
 
 jobs:
   assign-author:
-    runs-on: [self-hosted, small]
+    runs-on: arc-runners-small
+    timeout-minutes: 30
+    if: ${{ !github.event.pull_request.assignee }}
     steps:
-      - uses: toshimaru/auto-author-assign@v2.1.1
+      - uses: toshimaru/auto-author-assign@v3.0.1
