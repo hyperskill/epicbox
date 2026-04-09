@@ -1,43 +1,42 @@
 name: Format code
+
 on:
   pull_request:
   push:
     branches:
-      - main
+      - master
+    paths-ignore:
+      - .github/**
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref_name }}
-  cancel-in-progress: false
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  actions: write
 
 jobs:
   format:
     name: Format and lint with ruff
-    runs-on: [self-hosted, small]
+    runs-on: arc-runners-small
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Install Poetry
-        run: pipx install poetry==$(head -n 1 .poetry-version)
+      - uses: ./.github/workflows/actions/prepare
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version-file: '.python-version'
-          cache: 'poetry'
-
-      - name: Install dependencies
-        run: poetry install --no-interaction --no-ansi --no-root
-
-      - name: Check files using the ruff formatter
-        run: poetry run ruff format
-
-      - name: Check files using the ruff linter
-        run: poetry run ruff check --fix --unsafe-fixes --preview --exit-zero .
+      - run: poetry run ruff check --fix --unsafe-fixes --preview --exit-zero .
+      - run: poetry run ruff format .
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
+          fetch: false
+          default_author: github_actions
           message: 'Auto format'
-          add: '*.py'
+          add: '.'
